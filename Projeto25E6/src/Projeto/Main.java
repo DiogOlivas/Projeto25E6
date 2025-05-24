@@ -28,7 +28,7 @@ public class Main {
 	    		System.out.println("Teste");
 	    		break;
 	    	case 2:
-	    		
+	    		System.out.println("Teste2");
 	    		break;
 	    	case 3:
 	    		
