@@ -31,6 +31,7 @@ public class Main {
 	    		System.out.println("Teste2");
 	    		break;
 	    	case 3:
+			System.out.println("Teste3");
 	    		
 	    		break;
 	    	case 4:
