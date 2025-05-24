@@ -25,7 +25,7 @@ public class Main {
 	    	op = ler.nextInt();
 	    	switch(op) {
 	    	case 1:
-	    		
+	    		System.out.println("Teste");
 	    		break;
 	    	case 2:
 	    		
