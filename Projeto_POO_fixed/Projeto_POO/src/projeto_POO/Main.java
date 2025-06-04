@@ -170,7 +170,25 @@ public class Main {
             		                if (inst5.existeEdificio(nomeEdificio5).existePiso(numPiso).existeZona(nomeZona).existeSensor(idSensor) == null) {
             		                    System.out.println("Tipo de sensor: ");
             		                    String tipoSensor = ler.next();
-            		                    Sensor sensor = new Sensor(idSensor, tipoSensor);
+					   do{
+						Try{
+						     System.out.println("Qual o limite superior do sensor?");
+						     double limiteSup = ler.nextdouble;
+					    	}catch(exception e){
+						     System.out.println("Por favor, escreva um número.");
+					    	}
+					   }while();
+						
+					   do{
+						Try{
+						     System.out.println("Qual o limite inferior do sensor?");
+						     double limiteInf = ler.nextdouble;
+						}catch(exception e){
+						     System.out.println("Por favor, escreva um número.");
+						}
+					   }while();
+						
+            		                    Sensor sensor = new Sensor(idSensor, tipoSensor, limiteSup, limiteInf);
             		                    inst5.existeEdificio(nomeEdificio5).existePiso(numPiso).existeZona(nomeZona).addSensor(sensor);
             		                    System.out.println("Sensor registrado com sucesso!");
             		                } else {
