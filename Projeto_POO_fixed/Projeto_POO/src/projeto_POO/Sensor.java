@@ -10,6 +10,8 @@ public class Sensor {
 	private String zona;
 	private String edificio;
 	private String instituicao;
+	private double limiteSup;
+	private double limiteInf;
 	/**
 	 * @param nome
 	 * @param piso
@@ -17,13 +19,13 @@ public class Sensor {
 	 * @param leituras
 	 * @param zona
 	 */
-	public Sensor(int id, String tipo) {
+	public Sensor(int id, String tipo, double limiteSup, double limitInf) {
 		this.id = id;
 		this.tipo = tipo;
+		this.limiteSup = limiteSup;
+		this.limiteInf = limiteInf;
 		leituras = new ArrayList<Leitura>();
 	}
-	
-	
 	
 	public int getId() {
 		return id;
@@ -33,9 +35,8 @@ public class Sensor {
 		this.id = id;
 	}
 
-public void registrarLeitura(Leitura novaLeitura) {
-		leituras.add(novaLeitura);
-		
+	public void registrarLeitura(Leitura novaLeitura) {
+		leituras.add(novaLeitura);	
 	}
 	
 	public void verLeituras() {
