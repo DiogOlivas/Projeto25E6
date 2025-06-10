@@ -34,6 +34,9 @@ public class Sensor {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public ArrayList<Leitura> getLeituras() {
+		return leituras;
+	}
 
 	public void registrarLeitura(Leitura novaLeitura) {
 		leituras.add(novaLeitura);	
