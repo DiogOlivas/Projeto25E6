@@ -67,8 +67,7 @@ public class Main {
 	        	switch(op) {
 		        	case 1:
 		        		int opdicastipo = 0;
-		        		do {
-		    	            ler.nextLine();
+		        		do {	
 			        		System.out.println("Qual tipo de dicas deseja observar?\n1-Água\n2-Energia");
 			        		try{
 			        			opdicastipo = ler.nextInt();
@@ -76,7 +75,6 @@ public class Main {
 				    	    }catch(Exception e){
 				    	        System.out.println("Por favor, escreva um número.\nClique enter para continuar...");
 				    	        sucesso = false;
-				    	        opdicastipo = 0;
 				    	        continuar.nextLine();
 				    	    }
 				    	    if(sucesso){
@@ -92,26 +90,26 @@ public class Main {
 		        		}while(sucesso != true);
 		        		
 		        		switch(opdicastipo) {
-		        		case 1:
-		        			System.out.println("Dicas do tipo água!");
-			        		for(String i : listaDicasAgua) {
-			        			System.out.println(i);
-			        		}
-			        		System.out.println("\nClique enter para continuar...");
-		            		continuar.nextLine();
-		            		break;
-		        		case 2:
-		        			System.out.println("Dicas do tipo energia!");
-			        		for(String i : listaDicasEnergia) {
-			        			System.out.println(i);
-			        		}
-			        		System.out.println("\nClique enter para continuar...");
-		            		continuar.nextLine();
-		        			break;
-		        		default:
-		        			System.out.println("Opção inválida, tente denovo!\nClique enter para continuar...");
-		            		continuar.nextLine();
-		            		break;
+			        		case 1:
+			        			System.out.println("Dicas do tipo água!");
+				        		for(String i : listaDicasAgua) {
+				        			System.out.println(i);
+				        		}
+				        		System.out.println("\nClique enter para continuar...");
+				        		continuar.nextLine();
+			        			break;
+			        		case 2:
+			        			System.out.println("Dicas do tipo energia!");
+				        		for(String i : listaDicasEnergia) {
+				        			System.out.println(i);
+				        		}
+				        		System.out.println("\nClique enter para continuar...");
+				        		continuar.nextLine();
+			        			break;
+			        		default:
+			        			System.out.println("Opção inválida, tente denovo!\nClique enter para continuar...");
+			            		continuar.nextLine();
+			            		break;
 		        		}
 		        		break;
 		        	case 0:
