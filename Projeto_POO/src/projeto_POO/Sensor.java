@@ -50,6 +50,7 @@ public void registrarLeitura(Leitura novaLeitura) {
 		leituras.add(novaLeitura);
 		
 	}
+
 	
 	public void verLeituras() {
 		for (Leitura l : leituras) {
@@ -57,6 +58,26 @@ public void registrarLeitura(Leitura novaLeitura) {
 			System.out.println();
 		}
 		
+	}
+	    ArrayList<Leitura> leituras = sensor.getLeituras();
+	    double soma = 0;
+	    int count = 0;
+
+	    for (Leitura l : leituras) {
+	        String tipo = sensor.getTipo(); // tipo está no sensor
+	        if (tipoLeitura == 1 && tipo.equalsIgnoreCase("água")) {
+	            soma += l.getValor();
+	            count++;
+	        } else if (tipoLeitura == 2 && tipo.equalsIgnoreCase("energia")) {
+	            soma += l.getValor();
+	            count++;
+	        } else if (tipoLeitura == 3) {
+	            soma += l.getValor();
+	            count++;
+	        }
+	    }
+
+	    return soma / count;
 	}
 	
 	public double verLeiturasSoma() {
