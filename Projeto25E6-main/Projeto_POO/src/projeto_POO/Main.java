@@ -188,18 +188,27 @@ public class Main {
                     case 8: 
                     	
                     	Sistema.editarNomeEdificio();
+                    	break;
                     	
                     case 9:
                     	
                     	Sistema.editarZona();
+                    	break;
                     	
                     case 10: 
                     	
                     	Sistema.editarSensor();
+                    	break;
                     	
                     case 11:
                     	
                     	Sistema.consultarConsumo();
+                    	break;
+                    	
+                    case 12:
+                    	
+            	        Sistema.consultarMedia(instituicoes);
+                    	break;
                     	
                     case 0:
                     	
