@@ -465,186 +465,529 @@ public class Sistema {
 	}
 	
 	public static void consultarConsumo() {
-		
-		System.out.println("Qual o tipo de dados dos sensores deseja observar?\n1- Sensor de Água.\n2- Sensor de Luz.\n3- Os dois.");
-    	int tipoLeitura = ler.nextInt();
-    	
-    	System.out.println("Deseja consultar de que forma?\n1- Geral.\n2- Específico");
-    	int tipoConsulta = ler.nextInt();
-    	
-    	System.out.println("Deseja consultar o consumo por:\n1- Instituição\n2- Edifício\n3- Piso\n4- Zona\n5- Sensor");
-    	int elementoConsulta = ler.nextInt();
-    	
-    	switch(tipoConsulta) {
-    	
-    	case 1: 
-    		
-    		switch(elementoConsulta) {
-    		
-    		case 1:
-    			
-    			for(Instituicao i : instituicoes) {
-    	    		System.out.println("Instituição: " + i.getNome());
-    	    		i.verLeituraInstituicao(tipoLeitura);
-    			}
-    		
-    		case 2:
-    			
-    			for(Instituicao i : instituicoes) {
-    				
-    			}
-    	
-    		
-    		}
-    		
-    		break;
-    		
-    	case 2: 
-    		
-    		switch(elementoConsulta) {
-    		
-    		case 1:
-    			
-    			System.out.println("Instituição: ");
-    			String nomeInstituicao = ler.next();
-    			Instituicao i = existeInstituicao(nomeInstituicao, instituicoes);
-    			
-    			if(i == null) {
-    				System.out.println("Esta instituição não existe!");
-    				break;
-    			}else {
-    				i.verLeituraInstituicao();
-    			}
-    			
-    		case 2: 
-    			
-    			System.out.println("Em que instituição se localiza o edifício?");
-    	    	String insedi = ler.next();
-    	    	Instituicao inst = existeInstituicao(insedi, instituicoes);
-    	    	
-    	    	if(inst == null) {
-    	    		
-    	    		System.out.println("Esta instituição não existe!");
-    	    		
-    	    	}else if(inst.getNome().equals(insedi)) {
-    	    		
-    	    		System.out.println("Nome do edificio: ");
-    	    		String nomeEdificio = ler.next();
-    	    		
-    	    		if(inst.existeEdificio(nomeEdificio) != null) {
-    	    			
-    	    			inst.existeEdificio(nomeEdificio).verLeiturasEdificio();
-    	    			
-    	    		}else {
-    	    			
-    	    			System.out.println("Este edificio não existe!");
-    	    		}
-    	    	}
-    	    	
-    		case 3:
-    			
-    			System.out.println("Em que instituição se localiza o piso?");
-    	    	String insedi3 = ler.next();
-    	    	Instituicao inst3 = existeInstituicao(insedi3, instituicoes);
-    	    	
-    	    	if(inst == null) {
-    	    		
-    	    		System.out.println("Esta instituição não existe!");
-    	    		
-    	    	}else if(inst.getNome().equals(insedi3)) {
-    	    		
-    	    		System.out.println("Em que edifício se localiza o piso?");
-    	    		String nomeEdificio = ler.next();
-    	    		
-    	    		if(inst3.existeEdificio(nomeEdificio) == null) {
-    	    			
-    	    			System.out.println("Este edifício não existe!");
-    	    			break;
-    	    			
-    	    		}else {
-    	    			
-    	    			System.out.println("Número do piso: ");
-    	    			int numPiso = ler.nextInt();
-    	    			
-    	    			if(inst3.existeEdificio(nomeEdificio).existePiso(numPiso) != null) {
-    	    				
-    	    				inst3.existeEdificio(nomeEdificio).existePiso(numPiso).verLeituraPisos();
-    	    				
-    	    			}else {
-    	    				
-    	    				System.out.println("Este piso não existe!");
-    	    			}
-    	    				
-    	    		}
-    	    	}
-    	    	
-    		case 4: 
-    			
-    			System.out.println("Em que instituição se localiza a zona?");
-    	    	String insedi4 = ler.next();
-    	    	Instituicao inst4 = existeInstituicao(insedi, instituicoes);
+	    System.out.println("Qual o tipo de dados dos sensores deseja observar?\n1- Sensor de Água.\n2- Sensor de Luz.\n3- Os dois.");
+	    int tipoLeitura = ler.nextInt();
+	    
+	    System.out.println("Deseja consultar de que forma?\n1- Geral.\n2- Específico");
+	    int tipoConsulta = ler.nextInt();
+	    
+	    System.out.println("Deseja consultar o consumo por:\n1- Instituição\n2- Edifício\n3- Piso\n4- Zona\n5- Sensor");
+	    int elementoConsulta = ler.nextInt();
+	    
+	    switch(tipoLeitura) {
+	        case 1: // Checar sensores de água
+	            switch(tipoConsulta) {
+	                case 1: // Checar sensores de água, de forma geral
+	                    switch(elementoConsulta) {
+	                        case 1: 
+	                            for(Instituicao i : instituicoes) {
+	                                System.out.println("Consumo da instituição " + i.getNome() + ": ");
+	                                i.verLeituraSomaInstituicaoAgua();
+	                            }
+	                            break;
+	                            
+	                        case 2: 
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    System.out.println("Consumo do edifício " + e.getNome() + ": ");
+	                                    e.verLeituraSomaEdificioAgua();
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        System.out.println("Consumo do piso " + p.getNumeroPiso() + ": ");
+	                                        p.verLeituraSomaPisosAgua();
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            System.out.println("Consumo da zona " + z.getNomeZona() + ": ");
+	                                            z.verLeiturasSomaZonaAgua();
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            for(Sensor s : z.getSensores()) {
+	                                                if(s.getTipo().equals("agua")) {
+	                                                    System.out.println("Consumo do sensor " + s.getId() + ": ");
+	                                                    System.out.println(s.verLeiturasSomaSensor());
+	                                                }
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                    }
+	                    break;
+	                    
+	                case 2: // Checar sensores de água, de forma específica
+	                    switch(elementoConsulta) {
+	                        case 1:
+	                            System.out.println("Instituição: ");
+	                            String nomeInstituicao = ler.next();
+	                            Instituicao i = existeInstituicao(nomeInstituicao, instituicoes);
+	                            
+	                            if(i == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else {
+	                                i.verLeituraInstituicaoAgua();
+	                            }
+	                            break;
+	                            
+	                        case 2:
+	                            System.out.println("Em que instituição se localiza o edifício?");
+	                            String insedi = ler.next();
+	                            Instituicao inst = existeInstituicao(insedi, instituicoes);
+	                            
+	                            if(inst == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst.getNome().equals(insedi)) {
+	                                System.out.println("Nome do edificio: ");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst.existeEdificio(nomeEdificio) != null) {
+	                                    inst.existeEdificio(nomeEdificio).verLeiturasEdificioAgua();
+	                                } else {
+	                                    System.out.println("Este edificio não existe!");
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3: 
+	                            System.out.println("Em que instituição se localiza o piso?");
+	                            String insedi3 = ler.next();
+	                            Instituicao inst3 = existeInstituicao(insedi3, instituicoes);
+	                            
+	                            if(inst3 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst3.getNome().equals(insedi3)) {
+	                                System.out.println("Em que edifício se localiza o piso?");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst3.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edifício não existe!");
+	                                } else {
+	                                    System.out.println("Número do piso: ");
+	                                    int numPiso = ler.nextInt();
+	                                    
+	                                    if(inst3.existeEdificio(nomeEdificio).existePiso(numPiso) != null) {
+	                                        inst3.existeEdificio(nomeEdificio).existePiso(numPiso).verLeiturasPisosAgua();
+	                                    } else {
+	                                        System.out.println("Este piso não existe!");
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4:
+	                            System.out.println("Em que instituição se localiza a zona?");
+	                            String insedi4 = ler.next();
+	                            Instituicao inst4 = existeInstituicao(insedi4, instituicoes);
 
-    	    	if (inst4 == null) {
-    	    		
-    	    	    System.out.println("Esta instituição não existe!");
-    	    	    
-    	    	} else if (inst4.getNome().equals(insedi4)) {
-    	    		
-    	    	    System.out.println("Em que edifício se localiza a zona?");
-    	    	    String nomeEdificio = ler.next();
+	                            if (inst4 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if (inst4.getNome().equals(insedi4)) {
+	                                System.out.println("Em que edifício se localiza a zona?");
+	                                String nomeEdificio = ler.next();
 
-    	    	    if (inst4.existeEdificio(nomeEdificio) == null) {
-    	    	    	
-    	    	        System.out.println("Este edificio não existe!");
-    	    	        
-    	    	    } else {
-    	    	    	
-    	    	        System.out.println("Em que piso se localiza a zona?");
-    	    	        int numPiso = ler.nextInt();
+	                                if (inst4.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edificio não existe!");
+	                                } else {
+	                                    System.out.println("Em que piso se localiza a zona?");
+	                                    int numPiso = ler.nextInt();
 
-    	    	        if (inst.existeEdificio(nomeEdificio).existePiso(numPiso) == null) {
-    	    	        	
-    	    	            System.out.println("Este piso não existe!");
-    	    	            
-    	    	        } else {
-    	    	        	
-    	    	            System.out.println("Nome da zona: ");
-    	    	            String nomeZona1 = ler.next();
-    	    	            Zona zona = inst.existeEdificio(nomeEdificio).existePiso(numPiso).existeZona(nomeZona1);
-    	    	            
-    	    	            if (zona != null) {
-    	    	            	
-    	    	                zona.verLeiturasZonas();
-    	    	                
-    	    	            } else {
-    	    	            	
-    	    	                System.out.println("Esta zona não existe!");
-    	    	            }
-    	    	        }
-    	    	    }
-    	    	}
-    	    	
-    		case 5:
-    			
-    			System.out.println("Id do sensor: ");
-    			int idSensor = ler.nextInt();
-    			Sensor s = encontrarSensorId(idSensor, instituicoes);
-    			
-    			if(s != null) {
-    				
-    				s.verLeituras();
-    				
-    			}else {
-    				
-    				System.out.println("Este sensor não existe!");
-    				break;
-    			}
-    			
-    			
-    		}// Aqui termina o case elementoConsulta
-    		
-    	}
-        
+	                                    if (inst4.existeEdificio(nomeEdificio).existePiso(numPiso) == null) {
+	                                        System.out.println("Este piso não existe!");
+	                                    } else {
+	                                        System.out.println("Nome da zona: ");
+	                                        String nomeZona1 = ler.next();
+	                                        Zona zona = inst4.existeEdificio(nomeEdificio).existePiso(numPiso).existeZona(nomeZona1);
+	                                        
+	                                        if (zona != null) {
+	                                            zona.verLeiturasZonasAgua();
+	                                        } else {
+	                                            System.out.println("Esta zona não existe!");
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            System.out.println("Id do sensor: ");
+	                            int idSensor = ler.nextInt();
+	                            Sensor s = encontrarSensorId(idSensor, instituicoes);
+	                            
+	                            if(s != null) {
+	                                s.verLeituras();
+	                            } else {
+	                                System.out.println("Este sensor não existe!");
+	                            }
+	                            break;
+	                    }
+	                    break;
+	            }
+	            break;
+	            
+	        case 2: // Checar sensores de Energia
+	            switch(tipoConsulta) {
+	                case 1: // Checar consumo de Energia de forma geral
+	                    switch(elementoConsulta) {
+	                        case 1:
+	                            for(Instituicao i : instituicoes) {
+	                                System.out.println("Consumo da instituição " + i.getNome() + ": ");
+	                                i.verLeituraSomaInstituicaoEnergia();
+	                            }
+	                            break;
+	                            
+	                        case 2: 
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    System.out.println("Consumo do edifício " + e.getNome() + ": ");
+	                                    e.verLeituraSomaEdificioEnergia();
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        System.out.println("Consumo do piso " + p.getNumeroPiso() + ": ");
+	                                        p.verLeituraSomaPisosEnergia();
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            System.out.println("Consumo da zona " + z.getNomeZona() + ": ");
+	                                            z.verLeiturasSomaZonaEnergia();
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            for(Instituicao i : instituicoes) {
+	                                for(Edificio e : i.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            for(Sensor s : z.getSensores()) {
+	                                                if(s.getTipo().equals("energia")) {
+	                                                    System.out.println("Consumo do sensor " + s.getId() + ": ");
+	                                                    s.verSomaSensor();
+	                                                }
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                    }
+	                    break;
+	                    
+	                case 2: // Checar consumo de Energia, de forma específica
+	                    switch(elementoConsulta) {
+	                        case 1:
+	                            System.out.println("Instituição: ");
+	                            String nomeInstituicao = ler.next();
+	                            Instituicao i = existeInstituicao(nomeInstituicao, instituicoes);
+	                            
+	                            if(i == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else {
+	                                i.verLeiturasInstituicaoEnergia();
+	                            }
+	                            break;
+	                            
+	                        case 2:
+	                            System.out.println("Em que instituição se localiza o edifício?");
+	                            String insedi = ler.next();
+	                            Instituicao inst = existeInstituicao(insedi, instituicoes);
+	                            
+	                            if(inst == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst.getNome().equals(insedi)) {
+	                                System.out.println("Nome do edificio: ");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst.existeEdificio(nomeEdificio) != null) {
+	                                    inst.existeEdificio(nomeEdificio).verLeiturasEdificioEnergia();
+	                                } else {
+	                                    System.out.println("Este edificio não existe!");
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3:
+	                            System.out.println("Em que instituição se localiza o piso?");
+	                            String insedi3 = ler.next();
+	                            Instituicao inst3 = existeInstituicao(insedi3, instituicoes);
+	                            
+	                            if(inst3 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst3.getNome().equals(insedi3)) {
+	                                System.out.println("Em que edifício se localiza o piso?");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst3.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edifício não existe!");
+	                                } else {
+	                                    System.out.println("Número do piso: ");
+	                                    int numPiso = ler.nextInt();
+	                                    
+	                                    if(inst3.existeEdificio(nomeEdificio).existePiso(numPiso) != null) {
+	                                        inst3.existeEdificio(nomeEdificio).existePiso(numPiso).verLeiturasPisosEnergia();
+	                                    } else {
+	                                        System.out.println("Este piso não existe!");
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4:
+	                            System.out.println("Em que instituição se localiza a zona?");
+	                            String insedi4 = ler.next();
+	                            Instituicao inst4 = existeInstituicao(insedi4, instituicoes);
+
+	                            if (inst4 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if (inst4.getNome().equals(insedi4)) {
+	                                System.out.println("Em que edifício se localiza a zona?");
+	                                String nomeEdificio = ler.next();
+
+	                                if (inst4.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edificio não existe!");
+	                                } else {
+	                                    System.out.println("Em que piso se localiza a zona?");
+	                                    int numPiso = ler.nextInt();
+
+	                                    if (inst4.existeEdificio(nomeEdificio).existePiso(numPiso) == null) {
+	                                        System.out.println("Este piso não existe!");
+	                                    } else {
+	                                        System.out.println("Nome da zona: ");
+	                                        String nomeZona1 = ler.next();
+	                                        Zona zona = inst4.existeEdificio(nomeEdificio).existePiso(numPiso).existeZona(nomeZona1);
+	                                        
+	                                        if (zona != null) {
+	                                            zona.verLeiturasZonasAgua();
+	                                        } else {
+	                                            System.out.println("Esta zona não existe!");
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            System.out.println("Id do sensor: ");
+	                            int idSensor = ler.nextInt();
+	                            Sensor s = encontrarSensorId(idSensor, instituicoes);
+	                            
+	                            if(s != null) {
+	                                s.verLeituras();
+	                            } else {
+	                                System.out.println("Este sensor não existe!");
+	                            }
+	                            break;
+	                    }
+	                    break;
+	            }
+	            break;
+	            
+	        case 3: // Checar o consumo de água e energia
+	            switch(tipoConsulta) {
+	                case 1: // Checar o consumo de água e energia, de forma geral
+	                    switch(elementoConsulta) {
+	                        case 1:
+	                            for(Instituicao i1 : instituicoes) {
+	                                System.out.println("Consumo da instituição " + i1.getNome() + ": ");
+	                                i1.verLeituraSomaInstituicoes();
+	                            }
+	                            break;
+	                            
+	                        case 2:
+	                            for(Instituicao i2 : instituicoes) {
+	                                for(Edificio e : i2.getEdificios()) {
+	                                    System.out.println("Consumo do edifício " + e.getNome() + ": ");
+	                                    e.verLeituraSomaEdificios();
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3:
+	                            for(Instituicao i3 : instituicoes) {
+	                                for(Edificio e : i3.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        System.out.println("Consumo do piso " + p.getNumeroPiso() + ": ");
+	                                        p.verLeituraSomaPisos();
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4:
+	                            for(Instituicao i4 : instituicoes) {
+	                                for(Edificio e : i4.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            System.out.println("Consumo da zona " + z.getNomeZona() + ": ");
+	                                            z.verLeiturasSomaZonas();
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            for(Instituicao i5 : instituicoes) {
+	                                for(Edificio e : i5.getEdificios()) {
+	                                    for(Piso p : e.getPisos()) {
+	                                        for(Zona z : p.getZonas()) {
+	                                            for(Sensor s : z.getSensores()) { 
+	                                                    System.out.println("Consumo do sensor " + s.getId() + ": " + s.verLeiturasSomaSensor());
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                    }
+	                    break;
+	                    
+	                case 2: // Checar o consumo de água e energia, de forma específica
+	                    switch(elementoConsulta) {
+	                        case 1: 
+	                            System.out.println("Instituição: ");
+	                            String nomeInstituicao = ler.next();
+	                            Instituicao i = existeInstituicao(nomeInstituicao, instituicoes);
+	                            
+	                            if(i == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else {
+	                                i.verLeituraInstituicao();
+	                            }
+	                            break;
+	                            
+	                        case 2: 
+	                            System.out.println("Em que instituição se localiza o edifício?");
+	                            String insedi = ler.next();
+	                            Instituicao inst = existeInstituicao(insedi, instituicoes);
+	                            
+	                            if(inst == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst.getNome().equals(insedi)) {
+	                                System.out.println("Nome do edificio: ");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst.existeEdificio(nomeEdificio) != null) {
+	                                    inst.existeEdificio(nomeEdificio).verLeiturasEdificio();
+	                                } else {
+	                                    System.out.println("Este edificio não existe!");
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 3: 
+	                            System.out.println("Em que instituição se localiza o piso?");
+	                            String insedi3 = ler.next();
+	                            Instituicao inst3 = existeInstituicao(insedi3, instituicoes);
+	                            
+	                            if(inst3 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if(inst3.getNome().equals(insedi3)) {
+	                                System.out.println("Em que edifício se localiza o piso?");
+	                                String nomeEdificio = ler.next();
+	                                
+	                                if(inst3.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edifício não existe!");
+	                                } else {
+	                                    System.out.println("Número do piso: ");
+	                                    int numPiso = ler.nextInt();
+	                                    
+	                                    if(inst3.existeEdificio(nomeEdificio).existePiso(numPiso) != null) {
+	                                        inst3.existeEdificio(nomeEdificio).existePiso(numPiso).verLeituraPisos();
+	                                    } else {
+	                                        System.out.println("Este piso não existe!");
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 4: 
+	                            System.out.println("Em que instituição se localiza a zona?");
+	                            String insedi4 = ler.next();
+	                            Instituicao inst4 = existeInstituicao(insedi4, instituicoes);
+
+	                            if (inst4 == null) {
+	                                System.out.println("Esta instituição não existe!");
+	                            } else if (inst4.getNome().equals(insedi4)) {
+	                                System.out.println("Em que edifício se localiza a zona?");
+	                                String nomeEdificio = ler.next();
+
+	                                if (inst4.existeEdificio(nomeEdificio) == null) {
+	                                    System.out.println("Este edificio não existe!");
+	                                } else {
+	                                    System.out.println("Em que piso se localiza a zona?");
+	                                    int numPiso = ler.nextInt();
+
+	                                    if (inst4.existeEdificio(nomeEdificio).existePiso(numPiso) == null) {
+	                                        System.out.println("Este piso não existe!");
+	                                    } else {
+	                                        System.out.println("Nome da zona: ");
+	                                        String nomeZona1 = ler.next();
+	                                        Zona zona = inst4.existeEdificio(nomeEdificio).existePiso(numPiso).existeZona(nomeZona1);
+	                                        
+	                                        if (zona != null) {
+	                                            zona.verLeiturasZonas();
+	                                        } else {
+	                                            System.out.println("Esta zona não existe!");
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                            break;
+	                            
+	                        case 5:
+	                            System.out.println("Id do sensor: ");
+	                            int idSensor = ler.nextInt();
+	                            Sensor s = encontrarSensorId(idSensor, instituicoes);
+	                            
+	                            if(s != null) {
+	                                s.verLeituras();
+	                            } else {
+	                                System.out.println("Este sensor não existe!");
+	                            }
+	                            break;
+	                    }
+	                    break;
+	            }
+	            break;
+	    }
 	}
 	
 }
