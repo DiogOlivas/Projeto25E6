@@ -32,7 +32,7 @@ public class Piso {
 		}
 	}
 	
-	public String buscarZona(String nomeZona) {
+	public String buscarEdificio(String nomeZona) {
 		for(Zona i: zonas) {
 			if(i.getNomeZona().equals(nomeZona)) {
 				return i.getNomeZona();

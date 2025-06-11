@@ -30,6 +30,10 @@ public class Zona {
 		sensores.add(novoSensor);
 	}
 	
+	 public void removerSensor(Sensor s) {
+	        sensores.remove(s);
+	    }
+	
 	public void verLeiturasZonas() {
 
 		for (Sensor s : sensores) {

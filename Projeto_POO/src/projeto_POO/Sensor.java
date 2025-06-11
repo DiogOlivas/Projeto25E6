@@ -10,8 +10,6 @@ public class Sensor {
 	private String zona;
 	private String edificio;
 	private String instituicao;
-	private double limiteSup;
-	private double limiteInf;
 	/**
 	 * @param nome
 	 * @param piso
@@ -19,34 +17,54 @@ public class Sensor {
 	 * @param leituras
 	 * @param zona
 	 */
-	public Sensor(int id, String tipo, double limiteSup, double limitInf) {
+	public Sensor(int id, String tipo, String zona) {
 		this.id = id;
 		this.tipo = tipo;
-		this.limiteSup = limiteSup;
-		this.limiteInf = limiteInf;
+		this.zona = zona;
 		leituras = new ArrayList<Leitura>();
 	}
 	
+	
+	
 	public int getId() {
 		return id;
+	}
+	
+	public String getZona() {
+		return zona;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ArrayList<Leitura> getLeituras() {
-		return leituras;
+	
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	public void setZona(String zona) {
+		this.zona = zona;
 	}
 
-	public void registrarLeitura(Leitura novaLeitura) {
-		leituras.add(novaLeitura);	
+public void registrarLeitura(Leitura novaLeitura) {
+		leituras.add(novaLeitura);
+		
 	}
 	
 	public void verLeituras() {
 		for (Leitura l : leituras) {
 			System.out.println(l.toString());
+			System.out.println();
 		}
 		
+	}
+	
+	public double verLeiturasSoma() {
+		double somaLeitura = 0;
+		for(Leitura l : leituras) {
+			somaLeitura += l.getValor();
+		}
+		return somaLeitura;
 	}
 	
 	
