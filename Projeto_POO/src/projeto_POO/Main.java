@@ -26,6 +26,7 @@ public class Main {
             System.out.println("9- Editar uma zona. ");
             System.out.println("10- Editar um sensor");
             System.out.println("11- Consultar Consumo.");
+	    System.out.println("12- Consultar média.");
             System.out.println("0- SAIR.");
             op = ler.nextInt();
             
@@ -81,6 +82,11 @@ public class Main {
             case 11:
             	
             	Sistema.consultarConsumo();
+
+	    case 12:
+
+	        Sistema.consultarMedia(instituicoes);
+		break;
             	
             case 0:
             	
