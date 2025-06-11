@@ -145,7 +145,8 @@ public class Sistema {
     	}
     
 	}
-	
+
+	// Procura uma instituição, informa se existe, se existir pede para colocar o novo nome e altera
 	public static void editarNomeInstitucao() {
 		System.out.println("Qual instituíção deseja editar?");
 		String nomeInstituicao = ler.next();
