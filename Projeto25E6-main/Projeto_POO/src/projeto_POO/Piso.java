@@ -32,6 +32,68 @@ public class Piso {
 		}
 	}
 	
+	// Métodos para ver as leituras
+	
+	public void verLeiturasPisosAgua() {
+		
+		for(Zona z : zonas) {
+			z.verLeiturasZonasAgua();
+		}
+	}
+	
+	public void verLeiturasPisosEnergia() {
+		
+		for(Zona z : zonas) {
+			z.verLeiturasZonasEnergia();
+		}
+	}
+	
+	//Metodos para ver as somas dos consumos geral
+	
+	public double verSomaPisos() {
+		
+		double soma = 0;
+	    for (Zona z : zonas) {
+	        soma += z.verSomaZonas();
+	        }
+	    return soma;
+	}
+	
+	public void verLeituraSomaPisos() {
+		
+		System.out.println("Total do piso " + numeroPiso + " (água e energia): " + verSomaPisos());
+	}
+	
+	//Metodos para ver as somas dos consumos de água
+	
+	public double verSomaPisoAgua() {
+		double soma = 0;
+	    for (Zona z : zonas) {
+	        soma += z.verSomaZonaAgua();
+	    }
+	    return soma;
+	}
+	
+	public void verLeituraSomaPisosAgua() {
+	    System.out.println("Total do piso " + numeroPiso + " (água): " + verSomaPisoAgua());
+	}
+	
+	//Metodos para ver as somas dos consumos de energia
+	
+	public double verSomaPisoEnergia() {
+		double soma = 0;
+	    for (Zona z : zonas) {
+	        soma += z.verSomaZonaEnergia();
+	    }
+	    return soma;
+	}
+	
+	public void verLeituraSomaPisosEnergia() {
+	    System.out.println("Total do piso " + numeroPiso + " (energia): " + verSomaPisoEnergia());
+	}
+	
+	
+	
 	public String buscarEdificio(String nomeZona) {
 		for(Zona i: zonas) {
 			if(i.getNomeZona().equals(nomeZona)) {

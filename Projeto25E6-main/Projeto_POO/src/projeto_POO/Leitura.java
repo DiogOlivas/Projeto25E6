@@ -2,6 +2,7 @@ package projeto_POO;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Leitura {
 	private LocalDateTime dataHorario;
@@ -25,7 +26,9 @@ public class Leitura {
 	}
 
 	public String toString() {
-		return "Leitura [dataHorario= " + dataHorario + ", valor= " + valor + "]";
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+	    return "Data/Hora: " + dataHorario.format(formatter) + " | Valor: " + valor;
 	}
+
 	
 }
