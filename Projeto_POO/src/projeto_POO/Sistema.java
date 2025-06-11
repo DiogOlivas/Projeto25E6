@@ -3,6 +3,370 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Sistema {
+
+
+ // Método principal para consultar médias
+    public static void consultarMedia(ArrayList<Instituicao> instituicoes) {
+        Scanner ler = new Scanner(System.in);
+        int op = -1; // variável para guardar a opção do utilizador
+
+        // Menu de opções que se repete até o utilizador escolher sair (0)
+        while (op != 0) {
+            System.out.println("---- Consultar Média ----");
+            System.out.println("1 - Média por Instituição ");
+            System.out.println("2 - Média por Edifício ");
+            System.out.println("3 - Média por Piso ");
+            System.out.println("4 - Média por Zona ");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha uma opção: ");
+            op = ler.nextInt();
+            ler.nextLine(); // limpar o buffer
+
+            // Utilização de switch no estilo convencional
+            switch (op) {
+                case 1:
+                    consultarMediaPorInstituicao(instituicoes, ler);
+                    break;
+                case 2:
+                    consultarMediaPorEdificio(instituicoes, ler);
+                    break;
+                case 3:
+                    consultarMediaPorPiso(instituicoes, ler);
+                    break;
+                case 4:
+                    consultarMediaPorZona(instituicoes, ler);
+                    break;
+                case 0:
+                    System.out.println("Voltando ao menu principal...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        }
+    }
+
+    // Consulta da média por instituição
+    public static void consultarMediaPorInstituicao(ArrayList<Instituicao> instituicoes, Scanner ler) {
+        if (instituicoes.size() == 0) {
+            System.out.println("Não existem instituições registadas.");
+            return;
+        }
+
+        // Listar instituições
+        for (int i = 0; i < instituicoes.size(); i++) {
+            Instituicao inst = instituicoes.get(i);
+            System.out.println((i + 1) + " - " + inst.getNome());
+        }
+
+        System.out.print("Escolha a instituição: ");
+        int escolha = ler.nextInt();
+        ler.nextLine();
+
+        // Verificar se a escolha está dentro dos limites
+        if (escolha < 1) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        if (escolha > instituicoes.size()) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        Instituicao instSelecionada = instituicoes.get(escolha - 1);
+        ArrayList<Edificio> edificios = instSelecionada.getEdificios();
+        calcularEMostrarMedia(edificios, instSelecionada.getNome(), "instituição");
+    }
+
+    // Consulta da média por edifício
+    public static void consultarMediaPorEdificio(ArrayList<Instituicao> instituicoes, Scanner ler) {
+        ArrayList<Edificio> todosEdificios = new ArrayList<Edificio>();
+
+        for (int i = 0; i < instituicoes.size(); i++) {
+            Instituicao inst = instituicoes.get(i);
+            ArrayList<Edificio> edificios = inst.getEdificios();
+
+            for (int j = 0; j < edificios.size(); j++) {
+                todosEdificios.add(edificios.get(j));
+            }
+        }
+
+        if (todosEdificios.size() == 0) {
+            System.out.println("Não existem edifícios registados.");
+            return;
+        }
+
+        for (int i = 0; i < todosEdificios.size(); i++) {
+            System.out.println((i + 1) + " - " + todosEdificios.get(i).getNome());
+        }
+
+        System.out.print("Escolha o edifício: ");
+        int escolha = ler.nextInt();
+        ler.nextLine();
+
+        if (escolha < 1) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        if (escolha > todosEdificios.size()) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        Edificio edif = todosEdificios.get(escolha - 1);
+        ArrayList<Piso> pisos = edif.getPisos();
+        calcularEMostrarMedia(pisos, edif.getNome(), "edifício");
+    }
+
+    // Consulta da média por piso
+    public static void consultarMediaPorPiso(ArrayList<Instituicao> instituicoes, Scanner ler) {
+        ArrayList<Piso> todosPisos = new ArrayList<Piso>();
+
+        for (int i = 0; i < instituicoes.size(); i++) {
+            Instituicao inst = instituicoes.get(i);
+            ArrayList<Edificio> edificios = inst.getEdificios();
+
+            for (int j = 0; j < edificios.size(); j++) {
+                Edificio edif = edificios.get(j);
+                ArrayList<Piso> pisos = edif.getPisos();
+
+                for (int k = 0; k < pisos.size(); k++) {
+                    todosPisos.add(pisos.get(k));
+                }
+            }
+        }
+
+        if (todosPisos.size() == 0) {
+            System.out.println("Não existem pisos registados.");
+            return;
+        }
+
+        for (int i = 0; i < todosPisos.size(); i++) {
+            Piso p = todosPisos.get(i);
+            System.out.println((i + 1) + " - Piso " + p.getNumeroPiso());
+        }
+
+        System.out.print("Escolha o piso: ");
+        int escolha = ler.nextInt();
+        ler.nextLine();
+
+        if (escolha < 1) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        if (escolha > todosPisos.size()) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        Piso piso = todosPisos.get(escolha - 1);
+        ArrayList<Zona> zonas = piso.getZonas();
+        calcularEMostrarMedia(zonas, "Piso " + piso.getNumeroPiso(), "piso");
+    }
+
+    // Consulta da média por zona
+    public static void consultarMediaPorZona(ArrayList<Instituicao> instituicoes, Scanner ler) {
+        ArrayList<Zona> todasZonas = new ArrayList<Zona>();
+
+        for (int i = 0; i < instituicoes.size(); i++) {
+            Instituicao inst = instituicoes.get(i);
+            ArrayList<Edificio> edificios = inst.getEdificios();
+
+            for (int j = 0; j < edificios.size(); j++) {
+                Edificio edif = edificios.get(j);
+                ArrayList<Piso> pisos = edif.getPisos();
+
+                for (int k = 0; k < pisos.size(); k++) {
+                    Piso piso = pisos.get(k);
+                    ArrayList<Zona> zonas = piso.getZonas();
+
+                    for (int l = 0; l < zonas.size(); l++) {
+                        todasZonas.add(zonas.get(l));
+                    }
+                }
+            }
+        }
+
+        if (todasZonas.size() == 0) {
+            System.out.println("Não existem zonas registadas.");
+            return;
+        }
+
+        for (int i = 0; i < todasZonas.size(); i++) {
+            System.out.println((i + 1) + " - " + todasZonas.get(i).getNomeZona());
+        }
+
+        System.out.print("Escolha a zona: ");
+        int escolha = ler.nextInt();
+        ler.nextLine();
+
+        if (escolha < 1) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        if (escolha > todasZonas.size()) {
+            System.out.println("Escolha inválida.");
+            return;
+        }
+
+        Zona zona = todasZonas.get(escolha - 1);
+        ArrayList<Sensor> sensores = zona.getSensores();
+        calcularEMostrarMedia(sensores, zona.getNomeZona(), "zona");
+    }
+
+    // Método que calcula e mostra a média de consumo de água e energia
+    private static void calcularEMostrarMedia(ArrayList<?> lista, String nome, String tipo) {
+        double somaAgua = 0.0;
+        double somaEnergia = 0.0;
+        int countAgua = 0;
+        int countEnergia = 0;
+
+        // Verificar o tipo de lista e percorrer os elementos conforme a hierarquia
+        for (int i = 0; i < lista.size(); i++) {
+            Object obj = lista.get(i);
+
+            if (obj instanceof Edificio) {
+                Edificio edif = (Edificio) obj;
+                ArrayList<Piso> pisos = edif.getPisos();
+
+                for (int j = 0; j < pisos.size(); j++) {
+                    Piso piso = pisos.get(j);
+                    ArrayList<Zona> zonas = piso.getZonas();
+
+                    for (int k = 0; k < zonas.size(); k++) {
+                        Zona zona = zonas.get(k);
+                        ArrayList<Sensor> sensores = zona.getSensores();
+
+                        for (int l = 0; l < sensores.size(); l++) {
+                            Sensor s = sensores.get(l);
+                            ArrayList<Leitura> leituras = s.getLeituras();
+
+                            for (int m = 0; m < leituras.size(); m++) {
+                                Leitura lida = leituras.get(m);
+
+                                if (s.getTipo().equalsIgnoreCase("agua")) {
+                                    somaAgua += lida.getValor();
+                                    countAgua++;
+                                }
+
+                                if (s.getTipo().equalsIgnoreCase("energia")) {
+                                    somaEnergia += lida.getValor();
+                                    countEnergia++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // O mesmo processo repete-se para Piso, Zona ou Sensor
+            if (obj instanceof Piso) {
+                Piso piso = (Piso) obj;
+                ArrayList<Zona> zonas = piso.getZonas();
+
+                for (int j = 0; j < zonas.size(); j++) {
+                    Zona zona = zonas.get(j);
+                    ArrayList<Sensor> sensores = zona.getSensores();
+
+                    for (int k = 0; k < sensores.size(); k++) {
+                        Sensor s = sensores.get(k);
+                        ArrayList<Leitura> leituras = s.getLeituras();
+
+                        for (int l = 0; l < leituras.size(); l++) {
+                            Leitura lida = leituras.get(l);
+
+                            if (s.getTipo().equalsIgnoreCase("agua")) {
+                                somaAgua += lida.getValor();
+                                countAgua++;
+                            }
+
+                            if (s.getTipo().equalsIgnoreCase("energia")) {
+                                somaEnergia += lida.getValor();
+                                countEnergia++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (obj instanceof Zona) {
+                Zona zona = (Zona) obj;
+                ArrayList<Sensor> sensores = zona.getSensores();
+
+                for (int j = 0; j < sensores.size(); j++) {
+                    Sensor s = sensores.get(j);
+                    ArrayList<Leitura> leituras = s.getLeituras();
+
+                    for (int k = 0; k < leituras.size(); k++) {
+                        Leitura lida = leituras.get(k);
+
+                        if (s.getTipo().equalsIgnoreCase("agua")) {
+                            somaAgua += lida.getValor();
+                            countAgua++;
+                        }
+
+                        if (s.getTipo().equalsIgnoreCase("energia")) {
+                            somaEnergia += lida.getValor();
+                            countEnergia++;
+                        }
+                    }
+                }
+            }
+
+            if (obj instanceof Sensor) {
+                Sensor s = (Sensor) obj;
+                ArrayList<Leitura> leituras = s.getLeituras();
+
+                for (int j = 0; j < leituras.size(); j++) {
+                    Leitura lida = leituras.get(j);
+
+                    if (s.getTipo().equalsIgnoreCase("agua")) {
+                        somaAgua += lida.getValor();
+                        countAgua++;
+                    }
+
+                    if (s.getTipo().equalsIgnoreCase("energia")) {
+                        somaEnergia += lida.getValor();
+                        countEnergia++;
+                    }
+                }
+            }
+        }
+
+        // Mostrar resultados das médias
+        if (countAgua > 0) {
+            System.out.println("Média do consumo de água na " + tipo + " " + nome + ": " + (somaAgua / countAgua));
+        } else {
+            System.out.println("Não existem leituras de água na " + tipo + " " + nome + ".");
+        }
+
+        if (countEnergia > 0) {
+            System.out.println("Média do consumo de energia na " + tipo + " " + nome + ": " + (somaEnergia / countEnergia));
+        } else {
+            System.out.println("Não existem leituras de energia na " + tipo + " " + nome + ".");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	// Class encontrar Edificio
 	public static Edificio encontrarEdificio(String nomeEdificio, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
