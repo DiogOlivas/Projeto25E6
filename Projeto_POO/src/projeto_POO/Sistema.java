@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Sistema {
-	
+	// Class encontrar Edificio
 	public static Edificio encontrarEdificio(String nomeEdificio, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
 			for(Edificio e : i.getEdificios()) {
@@ -14,7 +14,8 @@ public class Sistema {
 					}
     			return null;
 				}
-	
+
+	// Método encontrar e retornar o Piso com base no Número do piso
 	public static Piso encontrarPiso(int numPiso, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
 			for(Edificio e : i.getEdificios()) {
@@ -27,7 +28,8 @@ public class Sistema {
 				}
     			return null;
 			}
-	
+
+	// Método encontrar e retornar a Zona com base no nome fornecido
 	public static Zona encontrarZona(String nomeZona, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
 			for(Edificio e : i.getEdificios()) {
@@ -42,7 +44,8 @@ public class Sistema {
 			}
     	return null;
     }
-	
+
+	// Método encontrar e retornar o sensor com base no id fornecido
 	public static Sensor encontrarSensorId(int sensorId, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
 			for(Edificio e : i.getEdificios()) {
@@ -61,7 +64,8 @@ public class Sistema {
     }
 			
 	static ArrayList<Instituicao> instituicoes = new ArrayList<>();
-	
+
+	// Verifica se o nome duma isntituição já existe
 	public static Instituicao existeInstituicao(String nomeInstituicao, ArrayList<Instituicao> instituicoes) {
     	for(Instituicao i: instituicoes) {
     		if(i.getNome().equalsIgnoreCase(nomeInstituicao)) {
