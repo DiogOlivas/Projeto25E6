@@ -19,8 +19,9 @@ public class Leitura {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
+	
 	public double getValor() {
-		return this.valor;
+		return valor;
 	}
 
 	public String toString() {
