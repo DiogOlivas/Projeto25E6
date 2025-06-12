@@ -4,10 +4,19 @@ import java.util.ArrayList;
 
 public class Sensor {
 	private int id;
+	private int piso;
 	private String tipo;
 	private ArrayList<Leitura> leituras;
 	private String zona;
-
+	private String edificio;
+	private String instituicao;
+	/**
+	 * @param nome
+	 * @param piso
+	 * @param tipo
+	 * @param leituras
+	 * @param zona
+	 */
 	public Sensor(int id, String tipo, String zona) {
 		this.id = id;
 		this.tipo = tipo;
@@ -24,10 +33,6 @@ public class Sensor {
 	public String getZona() {
 		return zona;
 	}
-	
-	public String getTipo() {
-		return tipo;
-	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -41,13 +46,9 @@ public class Sensor {
 		this.zona = zona;
 	}
 
-	public void registrarLeitura(Leitura novaLeitura) {
+public void registrarLeitura(Leitura novaLeitura) {
 		leituras.add(novaLeitura);
 		
-	}
-	
-	public ArrayList<Leitura> getLeituras() { 
-		return leituras; 
 	}
 	
 	public void verLeituras() {
@@ -55,19 +56,6 @@ public class Sensor {
 			System.out.println(l.toString());
 		}
 		
-	}
-	
-	public double verLeiturasSomaSensor() {
-		double somaLeitura = 0;
-		for(Leitura l : leituras) {
-			somaLeitura += l.getValor();
-		}
-		return somaLeitura;
-	}
-	
-	public void verSomaSensor() {
-		
-		System.out.println("Total do sensor " + id + ": " + verLeiturasSomaSensor());
 	}
 	
 	
